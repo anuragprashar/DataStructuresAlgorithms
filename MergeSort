@@ -1,0 +1,45 @@
+//Merge Sort Implementation
+
+class Solution {
+    public int[] mergeSort(int[] nums) {
+        if(nums.length==0){
+            return nums;
+        }
+        return mergeSort(nums, 0, nums.length-1); 
+    }
+    public int [] mergeSort(int[] nums, int low, int high){
+        if(high==low){
+            return new int[]{nums[low]};
+        }
+        int mid= low + (high-low)/2;
+        int[] left= mergeSort(nums,low, mid);
+        int[] right= mergeSort(nums,mid+1,high);
+        return merge(left, right);
+    }
+    public int[] merge(int[] left, int[] right){
+        int[] result= new int[left.length+right.length];
+        int leftArrayCount=0, rightArrayCount=0, runningCount= 0;
+        while(leftArrayCount<left.length || rightArrayCount <right.length){
+            if(leftArrayCount==left.length){
+                result[runningCount]=right[rightArrayCount];
+                rightArrayCount++;
+            }
+            else if(rightArrayCount==right.length){
+                result[runningCount]=left[leftArrayCount];
+                leftArrayCount++;
+            }
+            else{
+                if(left[leftArrayCount]<right[rightArrayCount]){
+                    result[runningCount]=left[leftArrayCount];
+                    leftArrayCount++;
+                }
+                else{
+                    result[runningCount]=right[rightArrayCount];
+                    rightArrayCount++;
+                }
+            }
+            runningCount++;
+        }
+        return result;
+    }
+}
